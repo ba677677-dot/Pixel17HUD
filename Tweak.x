@@ -457,7 +457,8 @@
 @end
 
 // --- IOS 16.7.16 VOLUME HUD HOOKS ---
-
+@interface SBVolumeHUDViewController : UIViewController
+@end
 %hook SBVolumeHUDViewController
 - (void)viewDidLoad {
     %orig;
