@@ -1,0 +1,9 @@
+Package: com.normaluser128.pixel17hud
+Name: Pixel 17 Volume HUD
+Version: 1.0.0
+Architecture: iphoneos-arm64
+Description: Android 17 frosted-glass Material 3 Expressive Volume HUD for iOS 16 rootless.
+Maintainer: normaluser128
+Author: normaluser128
+Section: Tweaks
+Depends: mobilesubstrate (>= 0.9.5000)
