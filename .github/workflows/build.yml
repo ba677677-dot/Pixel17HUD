@@ -15,7 +15,7 @@ jobs:
 
       - name: Install Theos and dependencies
         run: |
-          brew install ldid dpkg fakeroot
+          brew install ldid xz
           git clone --recursive https://github.com/theos/theos.git $HOME/theos
           curl -sL https://github.com/theos/sdks/archive/refs/heads/master.tar.gz | tar -xz -C $HOME/theos/sdks --strip-components=1
 
