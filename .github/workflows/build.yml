@@ -1,0 +1,35 @@
+name: Build Pixel17HUD Rootless
+
+on:
+  push:
+    branches: [ main, master ]
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: macos-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Install Theos and dependencies
+        run: |
+          brew install ldid dpkg fakeroot
+          git clone --recursive https://github.com/theos/theos.git $HOME/theos
+          curl -sL https://github.com/theos/sdks/archive/refs/heads/master.tar.gz | tar -xz -C $HOME/theos/sdks --strip-components=1
+
+      - name: Strip Windows CRLF line endings and compile
+        env:
+          THEOS: ${{ runner.temp }}/../../../Users/runner/theos
+        run: |
+          export THEOS=$HOME/theos
+          sed -i '' $'s/\r$//' control Makefile Pixel17HUD.plist Tweak.x
+          echo "" >> control
+          make package FINALPACKAGE=1 THEOS_PACKAGE_SCHEME=rootless TARGET=iphone:clang:latest:14.5
+
+      - name: Upload compiled Rootless DEB
+        uses: actions/upload-artifact@v4
+        with:
+          name: Pixel17HUD-Rootless-DEB
+          path: packages/*.deb
